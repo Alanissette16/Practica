@@ -36,35 +36,35 @@ Esta aplicación es el punto de partida para los tres retos de la evaluación pr
 ```powershell
 npm install
 ```
-![alt text](npm-install.png)
+![alt text](/images/npm-install.png)
 •	Captura o registro de la ejecución exitosa de las pruebas iniciales.
 ```powershell
 npm test
 ```
-![alt text](npm-test.png)
+![alt text](/images/npm-test.png)
 •	Captura o registro de la aplicación respondiendo localmente.
 ```powershell
 npm start
 ```
-![alt text](8080-local.png)
+![alt text](/images/8080-local.png)
 ## Evidencias Reto 1
 •	Captura o registro de la construcción de la imagen.
 ```powershell
 docker build -t nombre-imagen:etiqueta .
 ```
-![alt text](Creacion-imagen.png)
+![alt text](/images/Creacion-imagen.png)
 •	Captura o registro del contenedor en ejecución.
 ```powershell
 docker run -d --name nombre-contenedor -p puerto-anfitrion:puerto-contenedor nombre-imagen:etiqueta
 docker run -d --name app-reto1-inicial -p 3000:3000 repaso-sd:reto1-inicial
 ```
-![alt text](docker-ejecutandose.png)
+![alt text](/images/docker-ejecutandose.png)
 •	Captura o registro del intento fallido de acceso inicial.
-![alt text](Error.png)
+![alt text](/images/Error.png)
 •	Captura o registro que permita identificar el problema.
-![alt text](log-Error.png)
+![alt text](/images/log-Error.png)
 •	Captura o registro del archivo corregido.
-![alt text](Dockerfile-corre.png)
+![alt text](/images/Dockerfile-corre.png)
 •	Captura o registro de la aplicación respondiendo correctamente desde la máquina anfitriona.
 ```powershell
 docker build -t nombre-imagen:etiqueta .
@@ -75,19 +75,85 @@ docker stop app-reto1-inicial
 # Ejecutar Contenedor Corregido
 docker run -d --name app-reto1-corregido -p 8080:8080 repaso-sd:reto1-corregido
 ```
-![alt text](contenedor-8080.png)
+![alt text](/images/contenedor-8080.png)
+
 ## Evidencias Reto 2
 •	Captura o registro de la aplicación del manifiesto inicial.
-
+```powershell
+# Iniciar Minikube
+minikube start --driver=docker
+# Aplica los archivos de k8s
+kubectl apply -f .\k8s\
+```
+Pequeño cambio en el deployment
+Se utiliza esta línea
+image: repaso-sd:reto1-corregido
+![alt text](/images/manifiesto-inicial.png)
 •	Captura o registro de los pods en estado Running.
+Toca cambiar
+```yaml
+    matchLabels:
+      app: webapp
+```
+POR 
+```yaml
+    matchLabels:
+      app: web
+```
+```powershell
+# Aplica solo Deployment
+kubectl apply -f .\k8s\deployment.yaml
+# Cargar la imagen local en minikube
+minikube image load repaso-sd:reto1-corregido
+# Observa la recreación
+kubectl get pods -l app=web -w
+```
+![alt text](/images/pods-running.png)
 
 •	Captura o registro del Service sin endpoints o sin destinos válidos.
+```powershell
+# Consultar Service
+kubectl get service web-service
+# Verificar Endpoints
+kubectl get endpoints web-service
+# Descripcion 
+kubectl describe service web-service
+```
+![alt text](/images/Service-endpoints.png)
 
 •	Captura o registro del manifiesto corregido.
-
+Toca cambiar
+```yaml
+spec:
+  selector:
+    app: webapp
+```
+POR 
+```yaml
+spec:
+  selector:
+    app: web
+```
+![alt text](/images/Service-corregido.png)
+```powershell
+# Aplicar service
+kubectl apply -f .\k8s\service.yaml
+```
 •	Captura o registro del Service con endpoints poblados.
+```powershell
+# Verificar Endpoints
+kubectl get endpoints web-service
+```
+![alt text](/images/Endpoints-poblados.png)
 
 •	Captura o registro de una petición exitosa hacia la aplicación usando el servicio de Kubernetes.
-```powershell
 
+```powershell
+# Abrir Service en un puerto local
+kubectl port-forward service/web-service 8081:80
 ```
+```powershell
+# Llamarlo
+curl.exe -i http://localhost:8081
+```
+![alt text](/images/Peticion-exitosa.png)

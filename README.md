@@ -157,3 +157,18 @@ kubectl port-forward service/web-service 8081:80
 curl.exe -i http://localhost:8081
 ```
 ![alt text](/images/Peticion-exitosa.png)
+
+## Evidencias Reto 3 - CI/CD
+•	Captura o registro del pipeline inicial.
+```powershell
+
+```
+
+```powershell
+
+```
+•	Captura o registro de una prueba fallida provocada intencionalmente.
+•	Captura o registro que demuestre el comportamiento defectuoso del pipeline inicial.
+•	Captura o registro del archivo de workflow corregido.
+•	Captura o registro de una ejecución con pruebas fallidas donde el despliegue no se ejecute.
+•	Captura o registro de una ejecución final exitosa con pruebas aprobadas y despliegue ejecutado.

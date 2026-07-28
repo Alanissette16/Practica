@@ -189,8 +189,10 @@ deploy:
 ![alt text](/images/ci-cd_Corregido.png)
 •	Captura o registro de una ejecución con pruebas fallidas donde el despliegue no se ejecute.
 Mantener el 500 en server.test.js
+![alt text](/images/deploy-fallido.png)
 
 •	Captura o registro de una ejecución final exitosa con pruebas aprobadas y despliegue ejecutado.
+
 ```powershell
 
 ```

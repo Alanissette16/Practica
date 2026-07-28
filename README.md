@@ -160,15 +160,29 @@ curl.exe -i http://localhost:8081
 
 ## Evidencias Reto 3 - CI/CD
 •	Captura o registro del pipeline inicial.
-```powershell
+![alt text](/images/registro-ci-cd.png)
+![alt text](/images/Actions1-pipeline.png)
 
-```
-
-```powershell
-
-```
 •	Captura o registro de una prueba fallida provocada intencionalmente.
+PROVOCAR FALLA CAMBIANDO:
+```js
+ assert.strictEqual(response.status, 200);
+  assert.ok(parsed.message, 'la respuesta debe incluir un mensaje');
+  assert.ok(parsed.version, 'la respuesta debe incluir una version');
+```
+POR
+```js
+ assert.strictEqual(response.status, 500);
+```
+```powershell
+npm test
+```
+![alt text](/images/Prueba-fallo.png)
 •	Captura o registro que demuestre el comportamiento defectuoso del pipeline inicial.
+
 •	Captura o registro del archivo de workflow corregido.
 •	Captura o registro de una ejecución con pruebas fallidas donde el despliegue no se ejecute.
 •	Captura o registro de una ejecución final exitosa con pruebas aprobadas y despliegue ejecutado.
+```powershell
+
+```

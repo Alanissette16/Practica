@@ -241,7 +241,66 @@ jobs:
             ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ github.sha }}
             ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:latest
 ```
-
+![alt text](/images/workflow-fun.png)
+## Evidencias Reto 4
+•	Captura o registro del estado inicial del Deployment.
 ```powershell
+kubectl get deployment web-deployment
 
+kubectl get pods -l app=web -o wide
+
+kubectl describe deployment web-deployment
 ```
+CAPTURA TERMINAL
+•	Captura o registro del cambio aplicado para soportar mayor tráfico.
+cambia:
+
+replicas: 2
+
+por:
+
+replicas: 6
+```powershell
+# Aplicar el cambio
+kubectl apply -f .\k8s\deployment.yaml
+
+kubectl get deployment web-deployment
+
+kubectl get pods -l app=web
+```
+CAPTURA TERMINAL
+
+•	Captura o registro de la estrategia de despliegue utilizada.
+```yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: web-deployment
+spec:
+  replicas: 6
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 1
+      maxSurge: 1
+  selector:
+    matchLabels:
+      app: web
+```
+```powershell
+kubectl apply -f .\k8s\deployment.yaml
+```
+
+•	Captura o registro de tráfico de prueba durante el despliegue.
+```powershell
+# Preparar la imagen de la nueva versión
+docker build -t repaso-sd:reto4-v2 .
+# cárgar nueva imagen en Minikube
+minikube image load repaso-sd:reto4-v2
+
+kubectl port-forward service/web-service 8081:80
+# Peticiones
+while ($true) { curl.exe -s http://localhost:8081; Start-Sleep 1 }
+```
+
+•	Captura o registro que demuestre que la aplicación siguió respondiendo durante o después de la actualización.

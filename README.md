@@ -179,9 +179,17 @@ npm test
 ```
 ![alt text](/images/Prueba-fallo.png)
 •	Captura o registro que demuestre el comportamiento defectuoso del pipeline inicial.
-
+![alt text](/images/Comportamiento-pipe.png)
 •	Captura o registro del archivo de workflow corregido.
+Se agrega esta Linea despues de:
+```yaml
+deploy:
+    needs: build-test
+```
+![alt text](/images/ci-cd_Corregido.png)
 •	Captura o registro de una ejecución con pruebas fallidas donde el despliegue no se ejecute.
+Mantener el 500 en server.test.js
+
 •	Captura o registro de una ejecución final exitosa con pruebas aprobadas y despliegue ejecutado.
 ```powershell
 

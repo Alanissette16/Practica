@@ -33,7 +33,61 @@ Esta aplicación es el punto de partida para los tres retos de la evaluación pr
 
 ## Evidencia inicial obligatoria
 •	Captura o registro de la instalación de dependencias.
-
+```powershell
+npm install
+```
+![alt text](npm-install.png)
 •	Captura o registro de la ejecución exitosa de las pruebas iniciales.
-
+```powershell
+npm test
+```
+![alt text](npm-test.png)
 •	Captura o registro de la aplicación respondiendo localmente.
+```powershell
+npm start
+```
+![alt text](8080-local.png)
+## Evidencias Reto 1
+•	Captura o registro de la construcción de la imagen.
+```powershell
+docker build -t nombre-imagen:etiqueta .
+```
+![alt text](Creacion-imagen.png)
+•	Captura o registro del contenedor en ejecución.
+```powershell
+docker run -d --name nombre-contenedor -p puerto-anfitrion:puerto-contenedor nombre-imagen:etiqueta
+docker run -d --name app-reto1-inicial -p 3000:3000 repaso-sd:reto1-inicial
+```
+![alt text](docker-ejecutandose.png)
+•	Captura o registro del intento fallido de acceso inicial.
+![alt text](Error.png)
+•	Captura o registro que permita identificar el problema.
+![alt text](log-Error.png)
+•	Captura o registro del archivo corregido.
+![alt text](Dockerfile-corre.png)
+•	Captura o registro de la aplicación respondiendo correctamente desde la máquina anfitriona.
+```powershell
+docker build -t nombre-imagen:etiqueta .
+# Reconstruir Imagen
+docker build -t repaso-sd:reto1-corregido .
+# Detener contenedor falloso
+docker stop app-reto1-inicial
+# Ejecutar Contenedor Corregido
+docker run -d --name app-reto1-corregido -p 8080:8080 repaso-sd:reto1-corregido
+```
+![alt text](contenedor-8080.png)
+## Evidencias Reto 2
+•	Captura o registro de la aplicación del manifiesto inicial.
+
+•	Captura o registro de los pods en estado Running.
+
+•	Captura o registro del Service sin endpoints o sin destinos válidos.
+
+•	Captura o registro del manifiesto corregido.
+
+•	Captura o registro del Service con endpoints poblados.
+
+•	Captura o registro de una petición exitosa hacia la aplicación usando el servicio de Kubernetes.
+```powershell
+
+```
